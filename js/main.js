@@ -11,6 +11,7 @@ function getRandomResult(min, max, maxNumber = 0) {
   }
 
   const numberDegree = 10 ** maxNumber;
-  return ((Math.random() * (max - min) + min) * numberDegree) / numberDegree;
+  const result = ((Math.random() * (max - min) + min) * numberDegree) / numberDegree;
+  return +result.toFixed(maxNumber);
 } // Результат: число с плавающей точкой из диапазона "от...до" с указанным "количеством знаков после запятой" (источник: https://qna.habr.com/q/999157)
 getRandomResult(6, 6, 9);
