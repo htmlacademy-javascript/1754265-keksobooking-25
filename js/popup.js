@@ -18,7 +18,7 @@ cardsElement.querySelector('.popup__text--address').textContent = firsObj.offer.
 cardsElement.querySelector('.popup__text--capacity').textContent = `${firsObj.offer.rooms} комнаты для ${firsObj.offer.guests} гостей`;
 
 if (firsObj.offer.price === 0) {
-  cardsElement.classList.add('hidden');
+  cardsElement.querySelector('.popup__text--price').add('hidden');
 } else {
   cardsElement.querySelector('.popup__text--price').textContent = `${firsObj.offer.price} ₽/ночь`;
 };
@@ -69,12 +69,7 @@ firsObj.offer.photos.forEach((photo) => {
 
   photoContainer.append(somePhoto);
 });
-/*
-if (firsObj.offer.price === 0) {
-  cardsElement.classList.add('hidden');
-} else {
-  cardsElement.querySelector('.popup__text--price').textContent = `${firsObj.offer.price} ₽/ночь`;
-};*/
+
 
 document.querySelector('#map-canvas').append(cardsElement);
 
