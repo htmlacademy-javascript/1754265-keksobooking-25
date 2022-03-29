@@ -16,14 +16,14 @@ const AVATARS = [
 ];
 
 const TITLES = [
-'Невероятиное предложение',
-'Выгодное предложение',
-'Супер-предложение',
-'Лучшее предложение',
-'Низкая цена',
-'Котики ждут',
-'Будет много мягких котиков',
-'Замуррчательное предложение'
+  'Невероятиное предложение',
+  'Выгодное предложение',
+  'Супер-предложение',
+  'Лучшее предложение',
+  'Низкая цена',
+  'Котики ждут',
+  'Будет много мягких котиков',
+  'Замуррчательное предложение',
 ];
 
 const TYPES = [
@@ -62,7 +62,7 @@ const features = [
   'parking',
   'washer',
   'elevator',
-  'conditioner'
+  'conditioner',
 ];
 
 const photos = [
@@ -115,18 +115,15 @@ const getRandomArrayElement = (elements) => {
 };
 
 const author = () => {
-
   return
 };
 
 const offer = () => {
-
   return
 };
 
 
 const location1 = () => {
-
   return
 };
 
@@ -159,11 +156,11 @@ for (let i=0; i<SIMILAR_OFFERS_COUNT; i++) {
 
 
   });
-}
+};
 
 function createOffers() {
   return Array.from(similarOffers);
-}
+};
 
 export {createOffers};
 
