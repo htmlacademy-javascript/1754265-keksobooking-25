@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 53c1c4c (8.13 Правда или действие)
 
 
 function differentFieldValues() {
@@ -115,4 +118,7 @@ pristine.addValidator(possibleCapacity, validateCapacity, getCapacityErrorMessag
 };
 
 export {differentFieldValues};
+<<<<<<< HEAD
+>>>>>>> 53c1c4c (8.13 Правда или действие)
+=======
 >>>>>>> 53c1c4c (8.13 Правда или действие)
