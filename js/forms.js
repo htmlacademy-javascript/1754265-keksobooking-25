@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 53c1c4c (8.13 Правда или действие)
-
-
 function differentFieldValues() {
   const bookingForm = document.querySelector('.ad-form');
 
@@ -25,12 +18,6 @@ function differentFieldValues() {
     'palace': 10000
   };
 
-  /*const roomNumber = {
-    1: [1],
-    2: [1, 2],
-    3: [1, 2, 3],
-    100: [0]
-  };*/
 
   const roomNumber = {
     '1': ['1'],
@@ -118,7 +105,3 @@ pristine.addValidator(possibleCapacity, validateCapacity, getCapacityErrorMessag
 };
 
 export {differentFieldValues};
-<<<<<<< HEAD
->>>>>>> 53c1c4c (8.13 Правда или действие)
-=======
->>>>>>> 53c1c4c (8.13 Правда или действие)
