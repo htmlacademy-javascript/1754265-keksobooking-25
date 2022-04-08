@@ -14,4 +14,3 @@ setTimeout(activatePage, 3000);
 disableMapFilter();
 setTimeout(activateMapFilter, 3000);
 
-

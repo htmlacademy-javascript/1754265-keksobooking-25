@@ -1,9 +1,3 @@
-// получаем контейнер для popup__photos, очищаем через innerHTML, в цикле заполняем фото в img через src, далее добавляем к контейнеру фото.
-//        <img src="" class="popup__photo" width="45" height="40" alt="Фотография жилья">
-//для features создаем вместо img создаем li, задаем класс popup__feature, в цикле проходим по моссиву через for each, задать класс popup__feature--, далее в цикле добавляем созданный li
-// для TYPES создать ключ-значение. Исп. вычисляемым свойством, offer.type - объект нужно экспортировать. обратиться к type, передать в [offer.type]
-//{{offer.rooms}} комнаты для {{offer.guests}} гостей. - через шаблонные строки
-
 import {createOffers} from './data.js';
 
 const differentCardsTemplate = document.querySelector('#card').content.querySelector('.popup');
