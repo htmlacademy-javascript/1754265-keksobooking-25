@@ -5,6 +5,7 @@ console.log(
   createOffers()
 );
 import './popup.js';
+
 import {differentFieldValues} from './forms.js';
 differentFieldValues();
 
@@ -13,3 +14,4 @@ disablePage();
 setTimeout(activatePage, 3000);
 disableMapFilter();
 setTimeout(activateMapFilter, 3000);
+
