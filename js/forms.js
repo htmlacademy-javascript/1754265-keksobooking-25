@@ -1,4 +1,6 @@
+
 import {defineRoomWord, defineGuestWord} from './util.js';
+
 
 function differentFieldValues() {
   const bookingForm = document.querySelector('.ad-form');
@@ -20,11 +22,14 @@ function differentFieldValues() {
     'palace': 10000
   };
 
+
   const roomNumber = {
     '1': ['1'],
     '2': ['2', '1'],
     '3': ['3', '2', '1'],
+
     '100': ['0'],
+
   };
 
   const typeField = bookingForm.querySelector('#type');
@@ -33,6 +38,7 @@ function differentFieldValues() {
   const possibletimein = bookingForm.querySelector('#timein');
   const possibletimeout = bookingForm.querySelector('#timeout');
   const possiblePrice = bookingForm.querySelector('#price');
+
 
   function validateRoomNumberValue (value) {
     return roomNumber[value].includes(possibleCapacity.value);
@@ -102,4 +108,3 @@ function differentFieldValues() {
 }
 
 export {differentFieldValues};
-
