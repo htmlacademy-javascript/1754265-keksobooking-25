@@ -1,7 +1,3 @@
-
-import {defineRoomWord, defineGuestWord} from './util.js';
-
-
 function differentFieldValues() {
   const bookingForm = document.querySelector('.ad-form');
 
@@ -27,9 +23,7 @@ function differentFieldValues() {
     '1': ['1'],
     '2': ['2', '1'],
     '3': ['3', '2', '1'],
-
-    '100': ['0'],
-
+    '100': ['0']
   };
 
   const typeField = bookingForm.querySelector('#type');
@@ -40,71 +34,74 @@ function differentFieldValues() {
   const possiblePrice = bookingForm.querySelector('#price');
 
 
-  function validateRoomNumberValue (value) {
-    return roomNumber[value].includes(possibleCapacity.value);
+  function validateCapacity () {
+    return roomNumber[roomNumberValue.value].includes(possibleCapacity.value);
   }
 
-  function validateCapacity (value) {
-    return roomNumber[roomNumberValue.value].includes(value);
+  function getCapacityErrorMessage () {
+    return `
+      ${roomNumberValue.value}
+      ${possibleCapacity.value.toLowerCase()}
+      ${roomNumberValue.value === '1' ? 'гостя невозможно' : 'гостей невозможно'}
+    `;
   }
 
-  function getRoomNumberValueErrorMessage (value) {
-    return `${value} ${defineRoomWord(value)} для ${possibleCapacity.value} ${defineGuestWord(possibleCapacity.value)} невозможно`;
-  }
+pristine.addValidator(roomNumberValue, validateCapacity, getCapacityErrorMessage);
+pristine.addValidator(possibleCapacity, validateCapacity, getCapacityErrorMessage);
 
-  function getCapacityErrorMessage (value) {
-    return `${roomNumberValue.value} ${defineRoomWord(roomNumberValue.value)} для ${value} ${defineGuestWord(value)} невозможно`;
-  }
-
-  pristine.addValidator(roomNumberValue, validateRoomNumberValue, getRoomNumberValueErrorMessage);
-  pristine.addValidator(possibleCapacity, validateCapacity, getCapacityErrorMessage);
-
-  //title
+ //title
   function validateHeader(value) {
     return value.length >= 30 && value.length <= 100;
   }
 
-  pristine.addValidator(bookingForm.querySelector('#title'), validateHeader, 'От 30 до 100 символов');
-
-  //price
+  pristine.addValidator(
+    bookingForm.querySelector('#title'),
+    validateHeader,
+    'От 30 до 100 символов'
+  );
+//price
   typeField.addEventListener('change', () => {
     possiblePrice.placeholder = minPrice[typeField.value];
-  });
+});
 
   function validatePrice (value) {
-    return Number(value) >= minPrice[typeField.value];
+    return value >= minPrice[typeField.value];
   }
 
-  function getPriceErrorMessage (value) {
-    return `Минимальная цена ${minPrice[typeField.value]} руб. Факт: ${value}`;
+  function getPriceErrorMessage () {
+    return `Минимальная цена ${minPrice[typeField.value]} руб.`;
   }
-
   pristine.addValidator(possiblePrice, validatePrice, getPriceErrorMessage);
 
-  //Check in and out
 
-  possibletimein.addEventListener('change', () => {
+//rooms & capacity
+
+  /*function validateNumberOfRooms() {
+    return roomNumber[roomNumberValue.value].includes(possibleCapacity.value);
+  }
+  function getRoomNumberErrorMessage() {
+    return `Выберите другое количество гостей`;
+  }
+
+  pristine.addValidator(possibleCapacity, validateNumberOfRooms, getRoomNumberErrorMessage);
+*/
+
+//Check in and out
+
+  possibletimein.addEventListener('change', function () {
     possibletimeout.selectedIndex = possibletimein.selectedIndex;
   });
 
-  possibletimeout.addEventListener('change', () => {
+  possibletimeout.addEventListener('change', function () {
     possibletimein.selectedIndex = possibletimeout.selectedIndex;
   });
 
   bookingForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      bookingForm.submit();
-    } else {
-      const errorElement = document.querySelector('.ad-form__error');
-      errorElement.style.display = 'block';
-      errorElement.textContent = 'Заполните все необходимые поля';
-    }
-
+    pristine.validate();
   });
 
 
-}
+};
 
 export {differentFieldValues};
