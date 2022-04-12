@@ -75,9 +75,7 @@ function differentFieldValues() {
 
   pristine.addValidator(possiblePrice, validatePrice, getPriceErrorMessage);
 
-  //Check in and out
-
-  possibletimein.addEventListener('change', () => {
+ possibletimein.addEventListener('change', () => {
     possibletimeout.selectedIndex = possibletimein.selectedIndex;
   });
 
@@ -102,3 +100,5 @@ function differentFieldValues() {
 }
 
 export {differentFieldValues};
+  
+  
