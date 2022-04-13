@@ -8,7 +8,6 @@ console.log(
   createOffers()
 );
 import './popup.js';
-
 import {differentFieldValues} from './forms.js';
 differentFieldValues();
 

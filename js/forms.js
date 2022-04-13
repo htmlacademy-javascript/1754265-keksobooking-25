@@ -67,6 +67,7 @@ function differentFieldValues() {
 
   function validatePrice (value) {
     return Number(value) >= minPrice[typeField.value];
+
   }
 
   function getPriceErrorMessage (value) {
@@ -137,6 +138,7 @@ function differentFieldValues() {
   //Check in and out
 
   possibletimein.addEventListener('change', () => {
+
     possibletimeout.selectedIndex = possibletimein.selectedIndex;
   });
 
@@ -161,5 +163,4 @@ function differentFieldValues() {
 }
 
 export {differentFieldValues};
-
 
