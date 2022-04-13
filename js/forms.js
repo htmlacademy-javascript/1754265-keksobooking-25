@@ -67,6 +67,7 @@ function differentFieldValues() {
 
   function validatePrice (value) {
     return Number(value) >= minPrice[typeField.value];
+
   }
 
   function getPriceErrorMessage (value) {
@@ -75,7 +76,69 @@ function differentFieldValues() {
 
   pristine.addValidator(possiblePrice, validatePrice, getPriceErrorMessage);
 
- possibletimein.addEventListener('change', () => {
+  //Слайдер
+  const sliderElement = bookingForm.querySelector('.ad-form__slider');
+
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: 0,
+      max: 100000,
+    },
+    start: minPrice[typeField.value],
+    step: 1,
+    connect: 'lower',
+    format: {
+      to: function (value) {
+
+        return parseInt(value);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
+  });
+
+  noUiSlider.create(sliderElement, changeSlider(minPrice[typeField.value]));
+
+  sliderElement.noUiSlider.on('update', () => {
+    possiblePrice.value = sliderElement.noUiSlider.get();
+  });
+
+  typeField.addEventListener('change', () => {
+    possiblePrice.setAttribute('placeholder', minPrice[typeField.value]);
+    sliderElement.noUiSlider.updateOptions(changeSlider(minPrice[typeField.value]));
+  });
+  possiblePrice.addEventListener('input', (evt) => {
+    sliderElement.noUiSlider.set(evt.target.value);
+  });
+
+  // possiblePrice.addEventListener('change', () => {
+  //   sliderElement.noUiSlider.updateOptions({
+  //     start: possiblePrice.value,
+  //   });
+  // });
+
+;
+  // sliderElement.setAttribute('disabled', true);
+
+  // sliderElement.removeAttribute('disabled');
+
+ // function updateSlider () {
+//
+//получить минимум из input с ценой  через get. Далее sliderElement.noUiSlider вызвать метод update options, в котором задать range      range: {
+ //     min: 0,
+ //     max: 100000,
+ //   },
+ // };
+
+ //set input с ценой
+
+  typeField.addEventListener('change');
+
+  //Check in and out
+
+  possibletimein.addEventListener('change', () => {
+
     possibletimeout.selectedIndex = possibletimein.selectedIndex;
   });
 
@@ -100,5 +163,4 @@ function differentFieldValues() {
 }
 
 export {differentFieldValues};
-  
-  
+
