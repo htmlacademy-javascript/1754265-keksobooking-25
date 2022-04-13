@@ -65,5 +65,5 @@ firsObj.offer.photos.forEach((photo) => {
 });
 
 
-document.querySelector('#map-canvas').append(cardsElement);
+//document.querySelector('#map-canvas').append(cardsElement);
 

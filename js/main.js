@@ -1,5 +1,8 @@
 import './util.js';
 import {createOffers} from './data.js';
+import './map.js';
+import {getData} from './api.js';
+import {deleteMarkers, createMarker, closePopup} from './map.js';
 
 console.log(
   createOffers()
