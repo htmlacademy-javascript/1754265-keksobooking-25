@@ -1,5 +1,5 @@
 import {getRandomNumber, getRandomResult, getRandomNumbers} from './util.js';
-
+import {getData} from './api.js';
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -128,35 +128,35 @@ const location1 = () => {
 };
 
 
-const similarOffers = [];
-for (let i=0; i<SIMILAR_OFFERS_COUNT; i++) {
-  const location = {
-    lat: getRandomResult (35.65000, 35.70000, 5),
-    lng: getRandomResult (139.70000, 139.80000, 5),
-  };
-  similarOffers.push({
-    location: location,
-    author: {
-      avatar: getRandomArrayElement(AVATARS),
-    },
-    offer: {
-      title: getRandomArrayElement(TITLES),
-      address: `${location.lat}, ${location.lng}`,
-      price: getRandomNumber(500, 500000),
-      type: getRandomArrayElement(TYPES),
-      rooms: getRandomNumber(1,10),
-      guests: getRandomNumber(1,20),
-      checkin: getRandomArrayElement(CHECKINS),
-      checkout: getRandomArrayElement(CHECKOUTS),
-      features: getArrayFeatures(features),
-      description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getArrayPhotos(photos),
+const similarOffers = getData();
+// for (let i=0; i<SIMILAR_OFFERS_COUNT; i++) {
+//   const location = {
+//     lat: getRandomResult (35.65000, 35.70000, 5),
+//     lng: getRandomResult (139.70000, 139.80000, 5),
+//   };
+//   similarOffers.push({
+//     location: location,
+//     author: {
+//       avatar: getRandomArrayElement(AVATARS),
+//     },
+//     offer: {
+//       title: getRandomArrayElement(TITLES),
+//       address: `${location.lat}, ${location.lng}`,
+//       price: getRandomNumber(500, 500000),
+//       type: getRandomArrayElement(TYPES),
+//       rooms: getRandomNumber(1,10),
+//       guests: getRandomNumber(1,20),
+//       checkin: getRandomArrayElement(CHECKINS),
+//       checkout: getRandomArrayElement(CHECKOUTS),
+//       features: getArrayFeatures(features),
+//       description: getRandomArrayElement(DESCRIPTIONS),
+//       photos: getArrayPhotos(photos),
 
-    },
+//     },
 
 
-  });
-};
+//   });
+// };
 
 function createOffers() {
   return Array.from(similarOffers);

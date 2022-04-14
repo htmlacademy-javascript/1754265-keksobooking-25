@@ -1,3 +1,4 @@
+import { getData } from './api.js';
 import {activatePage, activateMapFilter} from './disable.js';
 
 //Задаем координаты "по умолчанию"
@@ -17,7 +18,12 @@ const map = L.map('map-canvas')
     lng: COORDINATES_DEF.lng,
   }, 16);
 
-//добавляем карту
+// function renderPins (ads) {
+
+// //forEach по объявлениям и создать маркер, затем добавить к карте
+// .addTo(map);
+// }
+// //добавляем карту
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
