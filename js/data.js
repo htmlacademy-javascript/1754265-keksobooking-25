@@ -128,7 +128,7 @@ const location1 = () => {
 };
 
 
-const similarOffers = getData();
+//const similarOffers = getData();
 // for (let i=0; i<SIMILAR_OFFERS_COUNT; i++) {
 //   const location = {
 //     lat: getRandomResult (35.65000, 35.70000, 5),

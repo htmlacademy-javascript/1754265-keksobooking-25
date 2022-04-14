@@ -9,12 +9,10 @@ const getData = (onSuccess, onFail) => {
         onFail('Информация не была загружена, обновите страницу');
       }})
     .then((data) => {
-      data.forEach((offers)=>{
-        onSuccess(offers);
-      });
+      onSuccess(data);
     })
-    .catch(()=>{
-      onFail('Информация не была загружена, обновите страницу');
+    .catch((error) => {
+      onFail(error);
     });
 };
 
@@ -33,8 +31,8 @@ const sendData = (onSuccess, onFail, body) => {
         onFail('Не удалось отправить форму. Попробуйте ещё раз');
       }
     })
-    .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+    .catch((error) => {
+      onFail(error);
     });
 };
 
