@@ -33,6 +33,7 @@ function differentFieldValues() {
   const possibletimein = bookingForm.querySelector('#timein');
   const possibletimeout = bookingForm.querySelector('#timeout');
   const possiblePrice = bookingForm.querySelector('#price');
+  const resetButton = document.querySelector('.ad-form__reset');
 
   function validateRoomNumberValue (value) {
     return roomNumber[value].includes(possibleCapacity.value);
@@ -98,33 +99,17 @@ function differentFieldValues() {
     },
   });
 
-  noUiSlider.create(sliderElement, changeSlider(minPrice[typeField.value]));
-
   sliderElement.noUiSlider.on('update', () => {
     possiblePrice.value = sliderElement.noUiSlider.get();
   });
 
+  possiblePrice.addEventListener('input', () => sliderElement.noUiSlider.set(price.value));
   typeField.addEventListener('change', () => {
-    possiblePrice.setAttribute('placeholder', minPrice[typeField.value]);
-    sliderElement.noUiSlider.updateOptions(changeSlider(minPrice[typeField.value]));
+    sliderElement.noUiSlider.updateOptions({
+      start: minPrice[typeField.value],
+    });
   });
-  possiblePrice.addEventListener('input', (evt) => {
-    sliderElement.noUiSlider.set(evt.target.value);
-  });
-
-  // possiblePrice.addEventListener('change', () => {
-  //   sliderElement.noUiSlider.updateOptions({
-  //     start: possiblePrice.value,
-  //   });
-  // });
-
-;
-  // sliderElement.setAttribute('disabled', true);
-
-  // sliderElement.removeAttribute('disabled');
-
  // function updateSlider () {
-//
 //получить минимум из input с ценой  через get. Далее sliderElement.noUiSlider вызвать метод update options, в котором задать range      range: {
  //     min: 0,
  //     max: 100000,
@@ -132,8 +117,6 @@ function differentFieldValues() {
  // };
 
  //set input с ценой
-
-  typeField.addEventListener('change');
 
   //Check in and out
 
@@ -158,9 +141,5 @@ function differentFieldValues() {
     }
 
   });
-
-
-}
-
+};
 export {differentFieldValues};
-

@@ -1,4 +1,5 @@
 import {activatePage, activateMapFilter} from './disable.js';
+import {createCustomPopup} from './popup.js';
 
 //Задаем координаты "по умолчанию"
 const COORDINATES_DEF = {
@@ -7,12 +8,11 @@ const COORDINATES_DEF = {
 };
 //создаем карту
 const map = L.map('map-canvas')
-.on('load', function (){
-  activatePage();
-  activateMapFilter();
-
-})
-.setView({
+  .on('load', () => {
+    activatePage();
+    activateMapFilter();
+  })
+  .setView({
     lat: COORDINATES_DEF.lat,
     lng: COORDINATES_DEF.lng,
   }, 16);
@@ -74,8 +74,8 @@ const deleteMarkers = () => {
 
 
 const createMarker = (point) => {
-  const {lat, lng} = point; console.log(point);
-    const marker = L.marker(
+  const {lat, lng} = point.location;
+  const marker = L.marker(
     {
       lat,
       lng,
