@@ -1,4 +1,5 @@
 import {defineRoomWord, defineGuestWord} from './util.js';
+//import {closePopup} from './util.js';
 
 function differentFieldValues() {
   const bookingForm = document.querySelector('.ad-form');
@@ -33,7 +34,8 @@ function differentFieldValues() {
   const possibletimein = bookingForm.querySelector('#timein');
   const possibletimeout = bookingForm.querySelector('#timeout');
   const possiblePrice = bookingForm.querySelector('#price');
-  const resetButton = document.querySelector('.ad-form__reset');
+  const resetButton = bookingForm.querySelector('.ad-form__reset');
+  const submitButton = bookingForm.querySelector('.ad-form__submit');
 
   function validateRoomNumberValue (value) {
     return roomNumber[value].includes(possibleCapacity.value);
@@ -109,14 +111,6 @@ function differentFieldValues() {
       start: minPrice[typeField.value],
     });
   });
- // function updateSlider () {
-//получить минимум из input с ценой  через get. Далее sliderElement.noUiSlider вызвать метод update options, в котором задать range      range: {
- //     min: 0,
- //     max: 100000,
- //   },
- // };
-
- //set input с ценой
 
   //Check in and out
 
@@ -139,7 +133,45 @@ function differentFieldValues() {
       errorElement.style.display = 'block';
       errorElement.textContent = 'Заполните все необходимые поля';
     }
+    const blockSubmitButton = () => {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Идет публикация формы...';
+    };
+
+    const unblockSubmitButton = () => {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Опубликовать';
+    };
+
+
+
+    const setUserFormSubmit = (onSuccess) => {
+      wizardForm.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+
+        const isValid = pristine.validate();
+        if (isValid) {
+          blockSubmitButton();
+          sendData(
+            () => {
+              onSuccess();
+              unblockSubmitButton();
+            },
+            () => {
+              showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+              unblockSubmitButton();
+            },
+            new FormData(evt.target),
+          );
+        }
+      });
+    };
 
   });
-};
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForm();
+  });
+}
+
 export {differentFieldValues};

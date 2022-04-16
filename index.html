@@ -168,10 +168,12 @@
           <label class="ad-form__label">Фотография жилья</label>
           <div class="ad-form__photo-container">
             <div class="ad-form__upload">
-              <input type="file" id="images" name="images" class="ad-form__input visually-hidden">
+              <input type="file" id="images" name="images" class="ad-form__input visually-hidden" accept=".png, .jpg, .jpeg, .gif">
               <label for="images" class="ad-form__drop-zone">Загрузить<br>фото...</label>
             </div>
-            <div class="ad-form__photo"></div>
+            <div class="ad-form__photo">
+              <img src="img/muffin-grey.svg" alt="Аватар пользователя" width="70" height="70">
+            </div>
           </div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--submit">
@@ -236,6 +238,7 @@
       <button type="button" class="error__button">Попробовать снова</button>
     </div>
   </template>
+
   <script src="leaflet/leaflet.js"></script>
   <script src="nouislider/nouislider.js"></script>
   <script src="pristine/pristine.min.js"></script>

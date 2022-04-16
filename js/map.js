@@ -1,6 +1,9 @@
 import {activatePage, activateMapFilter} from './disable.js';
 import {createCustomPopup} from './popup.js';
 
+const COORDINATES_DEF_LAT = 35.68950;
+const COORDINATES_DEF_LNG = 139.69171;
+
 //Задаем координаты "по умолчанию"
 const COORDINATES_DEF = {
   lat: 35.68950,
@@ -92,7 +95,7 @@ const createMarker = (point) => {
 
 //const markerAddress = bookingForm.querySelector('address');
 const addressElement = document.querySelector('#address');
-
+address.value = `${COORDINATES_DEF_LAT.toFixed(5)  }, ${  COORDINATES_DEF_LNG.toFixed(5)}`;
 mainPinMarker.on('moveend', (evt) => {
   const { lng, lat } = evt.target.getLatLng();
   addressElement.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
@@ -107,6 +110,17 @@ const closePopup = () => {
   map.closePopup();
 };
 
-export {deleteMarkers, createMarker, closePopup};
+const buttonReset = adForm.querySelector('.ad-form__reset');
 
-//на главный маркер повесить событие moveend, в кот. полю с адресом задавать значение координат. из Evt таргета брать getLatLng(), далее в инпут адрес шаблонной строкой сделать адрес.
+buttonReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  getDefault();
+});
+
+const sendAdForm = () => {
+  getDefault();
+  outputSuccess();
+};
+
+export {deleteMarkers, createMarker, closePopup, resetMap, sendAdForm};
+
