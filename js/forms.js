@@ -107,7 +107,7 @@ function differentFieldValues() {
     possiblePrice.value = sliderElement.noUiSlider.get();
   });
 
-  possiblePrice.addEventListener('input', () => sliderElement.noUiSlider.set(price.value));
+  possiblePrice.addEventListener('input', () => sliderElement.noUiSlider.set(possiblePrice.value));
   typeField.addEventListener('change', () => {
     sliderElement.noUiSlider.updateOptions({
       start: minPrice[typeField.value],
