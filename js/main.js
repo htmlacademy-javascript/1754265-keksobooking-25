@@ -2,24 +2,12 @@ import './util.js';
 import {getData} from './api.js';
 import {deleteMarkers, createMarker, closePopup} from './map.js';
 import './photo.js';
-import {showAlert, debounce} from './util.js';
-import {onFilterChange} from './filter.js';
+import {debounce} from './util.js';
+import {getNewArrayOfAds, onFilterChange} from './filter.js';
 
-
-function onSuccess(points) {
-  console.log(points);
-  points.forEach((point) => {
-    createMarker(point);
-  });
-}
-
-
-function onFail(error) {
-  console.error(error);
-}
-
-getData(onSuccess, onFail);
 //передать в onSuccess первые 10 меток через  метод .slice)
+
+let points = [];
 
 import './popup.js';
 import {differentFieldValues} from './forms.js';
@@ -35,35 +23,44 @@ setTimeout(activateMapFilter, 3000);
 const ERROR_DELAY = 500;
 
 const formFilter = document.querySelector('.map__filters');
-const housingTypeFilter = formFilter.querySelector('#housing-type');
-const housingPriceFilter = formFilter.querySelector('#housing-price');
-const housingRoomsFilter = formFilter.querySelector('#housing-rooms');
-const housingGuestsFilter = formFilter.querySelector('#housing-guests');
-const housingFeaturesFilter = formFilter.querySelector('#housing-features');
+const typeFilterBlock = formFilter.querySelector('#housing-type');
+const priceFilterBlock = formFilter.querySelector('#housing-price');
+const roomsFilterBlock = formFilter.querySelector('#housing-rooms');
+const guestsFilterBlock = formFilter.querySelector('#housing-guests');
+const featuresFilterBlock = formFilter.querySelector('#housing-features');
 
-
-getData(
-  (ads) => {
-    createMarker(ads);
-    onFilterChange(debounce(
-      () => getSimilarAd(ads),
-      ERROR_DELAY), housingTypeFilter);
-    onFilterChange(debounce(
-      () => getSimilarAd(ads),
-      ERROR_DELAY), housingPriceFilter);
-    onFilterChange(debounce(
-      () => getSimilarAd(ads),
-      ERROR_DELAY), housingRoomsFilter);
-    onFilterChange(debounce(
-      () => getSimilarAd(ads),
-      ERROR_DELAY), housingGuestsFilter);
-    onFilterChange(debounce(
-      () => getSimilarAd(ads),
-      ERROR_DELAY), housingFeaturesFilter);
-  },
+const filerChangeHandler = debounce(
   () => {
-    showAlert('Не удалось загрузить данные с сервера!');
-
-  }
+    const ads = getNewArrayOfAds(points);
+    deleteMarkers();
+    ads.forEach((point) => {
+      createMarker(point);
+    });
+  },
+  ERROR_DELAY
 );
+
+function onSuccessGetData(ads) {
+  console.log(ads);
+
+  points = ads;
+
+  points.forEach((point, index) => {
+    if (index <= 9) {
+      createMarker(point);
+    }
+  });
+
+  onFilterChange(filerChangeHandler, typeFilterBlock);
+  onFilterChange(filerChangeHandler, priceFilterBlock);
+  onFilterChange(filerChangeHandler, roomsFilterBlock);
+  onFilterChange(filerChangeHandler, guestsFilterBlock);
+  onFilterChange(filerChangeHandler, featuresFilterBlock);
+}
+
+function onFailedGetData(error) {
+  console.error(error);
+}
+
+getData(onSuccessGetData, onFailedGetData);
 

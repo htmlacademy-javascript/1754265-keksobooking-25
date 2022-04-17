@@ -5,7 +5,6 @@ const housingPrice = mapFilters.querySelector('#housing-price');
 const housingRooms = mapFilters.querySelector('#housing-rooms');
 const housingGuests = mapFilters.querySelector('#housing-guests');
 
-
 const minPriceMap = {
   'low': [0, 10000],
   'middle': [10000, 50000],
@@ -28,7 +27,7 @@ const priceFilter = (ad) => {
   const minPrice = minPriceMap[housingPrice.value][0];
   const maxPrice = minPriceMap[housingPrice.value][1];
 
-  return minPrice <= priceFilterValue && maxPrice >= priceFilterValue;
+  return ad.offer.price >= minPrice && ad.offer.price <= maxPrice;
 };
 
 const roomsFilter = (ad) => {
@@ -36,7 +35,7 @@ const roomsFilter = (ad) => {
   if (roomsFilterValue === 'any') {
     return true;
   }
-  return roomsFilterValue === ad.offer.rooms;
+  return Number(roomsFilterValue) === ad.offer.rooms;
 };
 
 const guestsFilter = (ad) => {
@@ -44,7 +43,7 @@ const guestsFilter = (ad) => {
   if (guestsFilterValue === 'any') {
     return true;
   }
-  return guestsFilterValue === ad.offer.guests;
+  return Number(guestsFilterValue) === ad.offer.guests;
 };
 
 
@@ -52,7 +51,7 @@ const featuresFilter = (ad) => {
 
   const featuresChecked = Array.from(mapFilters.querySelectorAll('.map__checkbox:checked'), (inp) => inp.value);
 
-  if (item.offer.features)  {
+  if (ad.offer.features)  {
     if (featuresChecked.every((feature) => ad.offer.features.includes(feature))) {
       return ad;
     }
@@ -82,4 +81,4 @@ const onFilterChange = (cb, filter) => {
 };
 
 
-export {getNewArrayAds, onFilterChange};
+export {getNewArrayOfAds, onFilterChange};

@@ -73,7 +73,36 @@ const showAlert = (message) => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 
-}
+};
+
+const getTemplate = (templateId) => {
+  const template = document.querySelector(`#${templateId}`);
+  const clone = template.content.cloneNode(true).children[0];
+  return clone;
+};
+
+let popup;
+
+const onEscapePush = (evt) => {
+  evt.preventDefault();
+  if (evt.key === 'Escape') {
+    popup.remove();
+    document.removeEventListener(onEscapePush);
+  }
+};
+
+const showSuccessPopup = () => {
+  popup = getTemplate('success');
+  document.addEventListener('keydown', onEscapePush);
+  document.body.appendChild(popup);
+};
+
+const showErrorPopup = () => {
+  popup = getTemplate('error');
+  document.addEventListener('keydown', onEscapePush);
+  document.body.appendChild(popup);
+};
+
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
@@ -86,13 +115,6 @@ const Escape = 'Escape';
 const EscapeKey = (evt) => evt.key === Escape;
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-const showAlertEscape = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.classList.add('alert-container');
-  alertContainer.textContent = message;
-  document.body.append(alertContainer);
-};
 
 const showMessage = (template) => {
   const message =  template.cloneNode(true);
@@ -112,5 +134,18 @@ const showMessage = (template) => {
 
 const successMessage = () => showMessage(successTemplate);
 const failMessage = () => showMessage(errorTemplate);
-export {getRandomNumber, getRandomResult, getRandomNumbers, defineRoomWord, defineGuestWord, debounce, isEscapeKey, isEnterKey, showAlert, showAlertEscape, successMessage, failMessage};
-
+export {
+  getRandomNumber,
+  getRandomResult,
+  getRandomNumbers,
+  defineRoomWord,
+  defineGuestWord,
+  debounce,
+  isEscapeKey,
+  isEnterKey,
+  showAlert,
+  successMessage,
+  failMessage,
+  showSuccessPopup,
+  showErrorPopup
+};

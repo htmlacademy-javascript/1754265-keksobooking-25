@@ -1,13 +1,14 @@
 import {activatePage, activateMapFilter} from './disable.js';
 import {createCustomPopup} from './popup.js';
 
+const ZOOM_DEF_VALUE = 16;
 const COORDINATES_DEF_LAT = 35.68950;
 const COORDINATES_DEF_LNG = 139.69171;
 
 //Задаем координаты "по умолчанию"
 const COORDINATES_DEF = {
-  lat: 35.68950,
-  lng: 139.69171,
+  lat: COORDINATES_DEF_LAT,
+  lng: COORDINATES_DEF_LNG,
 };
 //создаем карту
 const map = L.map('map-canvas')
@@ -18,7 +19,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: COORDINATES_DEF.lat,
     lng: COORDINATES_DEF.lng,
-  }, 16);
+  }, ZOOM_DEF_VALUE);
 
 //добавляем карту
 L.tileLayer(
@@ -65,16 +66,15 @@ const resetMap = () => {
   map.setView({
     lat: COORDINATES_DEF.lat,
     lng: COORDINATES_DEF.lng,
-  }, 16);
+  }, ZOOM_DEF_VALUE);
 };
 
 //слой для отрисовки неглавных меток
 const markerGroup = L.layerGroup().addTo(map);
 
 const deleteMarkers = () => {
-  markerGroup.clearLayer();
+  markerGroup.clearLayers();
 };
-
 
 const createMarker = (point) => {
   const {lat, lng} = point.location;
@@ -93,14 +93,18 @@ const createMarker = (point) => {
     .bindPopup(createCustomPopup(point));
 };
 
-//const markerAddress = bookingForm.querySelector('address');
 const addressElement = document.querySelector('#address');
-address.value = `${COORDINATES_DEF_LAT.toFixed(5)  }, ${  COORDINATES_DEF_LNG.toFixed(5)}`;
+
+function resetAddressValue() {
+  addressElement.value = `${COORDINATES_DEF_LAT.toFixed(5)  }, ${  COORDINATES_DEF_LNG.toFixed(5)}`;
+}
+
+resetAddressValue();
+
 mainPinMarker.on('moveend', (evt) => {
   const { lng, lat } = evt.target.getLatLng();
   addressElement.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 });
-
 
 //добавляем метку на карту
 mainPinMarker.addTo(map);
@@ -110,17 +114,6 @@ const closePopup = () => {
   map.closePopup();
 };
 
-const buttonReset = adForm.querySelector('.ad-form__reset');
+export {deleteMarkers, createMarker, closePopup, resetMap, resetAddressValue};
 
-buttonReset.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  getDefault();
-});
-
-const sendAdForm = () => {
-  getDefault();
-  outputSuccess();
-};
-
-export {deleteMarkers, createMarker, closePopup, resetMap, sendAdForm};
 
