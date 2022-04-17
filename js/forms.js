@@ -136,7 +136,7 @@ function differentFieldValues() {
   function onSuccessSendForm() {
     unblockSubmitButton();
     showSuccessPopup();
-    // resetForm();
+    resetForm();
   }
 
   function onFailedSendForm() {

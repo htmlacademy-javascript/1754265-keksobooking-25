@@ -1,5 +1,13 @@
 const createCustomPopup = (point) => {
 
+  const apartmentType = {
+    bungalow: 'Бунгало',
+    flat: 'Квартира',
+    hotel: 'Отель',
+    house: 'Дом',
+    palace: 'Дворец',
+  };
+
   const {offer, author} = point;
 
   const differentCardsTemplate = document.querySelector('#card').content.querySelector('.popup');
@@ -34,14 +42,6 @@ const createCustomPopup = (point) => {
   }
 
   //Types
-  const apartmentType = {
-    bungalow: 'Бунгало',
-    flat: 'Квартира',
-    hotel: 'Отель',
-    house: 'Дом',
-    palace: 'Дворец',
-  };
-
   const typeContainer = cardsElement.querySelector('.popup__type');
   typeContainer.textContent = apartmentType[offer.type];
 
