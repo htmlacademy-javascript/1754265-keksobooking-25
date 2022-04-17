@@ -1,7 +1,10 @@
-import {defineRoomWord, defineGuestWord} from './util.js';
+import {defineRoomWord, defineGuestWord, showSuccessPopup, showErrorPopup} from './util.js';
+import {resetMap, resetAddressValue} from './map.js';
+import {sendData} from './api.js';
 
 function differentFieldValues() {
   const bookingForm = document.querySelector('.ad-form');
+  const mapFiltersForm = document.querySelector('.map__filters');
 
   const pristine = new Pristine(bookingForm, {
     classTo: 'ad-form',
@@ -33,7 +36,10 @@ function differentFieldValues() {
   const possibletimein = bookingForm.querySelector('#timein');
   const possibletimeout = bookingForm.querySelector('#timeout');
   const possiblePrice = bookingForm.querySelector('#price');
-  const resetButton = document.querySelector('.ad-form__reset');
+  const resetButton = bookingForm.querySelector('.ad-form__reset');
+  const submitButton = bookingForm.querySelector('.ad-form__submit');
+  const avatarPreview = document.querySelector('.ad-form-header__preview img');
+  const photoPreview = document.querySelector('.ad-form__photo-container img');
 
   function validateRoomNumberValue (value) {
     return roomNumber[value].includes(possibleCapacity.value);
@@ -68,7 +74,6 @@ function differentFieldValues() {
 
   function validatePrice (value) {
     return Number(value) >= minPrice[typeField.value];
-
   }
 
   function getPriceErrorMessage (value) {
@@ -90,8 +95,7 @@ function differentFieldValues() {
     connect: 'lower',
     format: {
       to: function (value) {
-
-        return parseInt(value);
+        return parseInt(value, 10);
       },
       from: function (value) {
         return parseFloat(value);
@@ -109,19 +113,9 @@ function differentFieldValues() {
       start: minPrice[typeField.value],
     });
   });
- // function updateSlider () {
-//получить минимум из input с ценой  через get. Далее sliderElement.noUiSlider вызвать метод update options, в котором задать range      range: {
- //     min: 0,
- //     max: 100000,
- //   },
- // };
-
- //set input с ценой
 
   //Check in and out
-
   possibletimein.addEventListener('change', () => {
-
     possibletimeout.selectedIndex = possibletimein.selectedIndex;
   });
 
@@ -129,17 +123,62 @@ function differentFieldValues() {
     possibletimein.selectedIndex = possibletimeout.selectedIndex;
   });
 
+  const blockSubmitButton = () => {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Идет публикация формы...';
+  };
+
+  const unblockSubmitButton = () => {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Опубликовать';
+  };
+
+  function onSuccessSendForm() {
+    unblockSubmitButton();
+    showSuccessPopup();
+    // resetForm();
+  }
+
+  function onFailedSendForm() {
+    unblockSubmitButton();
+    showErrorPopup();
+  }
+
   bookingForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      bookingForm.submit();
+    const isFormValid = pristine.validate();
+    if (isFormValid) {
+      const formData = new FormData(evt.target);
+      blockSubmitButton();
+      sendData(onSuccessSendForm, onFailedSendForm, formData);
     } else {
       const errorElement = document.querySelector('.ad-form__error');
       errorElement.style.display = 'block';
-      errorElement.textContent = 'Заполните все необходимые поля';
+      const prisitineErrors = pristine.getErrors();
+      const errorMsg = prisitineErrors.map((item) => {
+        const fieldName = item.input.name;
+        const errors = item.errors;
+        const msg = errors.reduce((acc, errorItem) => `${acc}<br/>${errorItem}`, '');
+        return `<br/>Ошибка в поле ${fieldName}:${msg}<br/>`;
+      });
+      errorElement.innerHTML = errorMsg;
     }
-
   });
-};
+
+  function resetForm() {
+    bookingForm.reset();
+    sliderElement.noUiSlider.reset();
+  }
+
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForm();
+    avatarPreview.src='img/muffin-grey.svg';
+    photoPreview.src='img/muffin-grey.svg';
+    resetMap();
+    resetAddressValue();
+    mapFiltersForm.reset();
+  });
+}
+
 export {differentFieldValues};

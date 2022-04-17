@@ -14,17 +14,17 @@ item.disabled=false;
   });
 };
 
-const addFormMap = document.querySelector('.map__filters');
-addFormMap.classList.add('disabled');
+const addFormMapFilter = document.querySelector('.map__filters');
+addFormMapFilter.classList.add('disabled');
 
 export function disableMapFilter(){
-  addFormMap.querySelectorAll('.map__filter').forEach((item) => {
+  addFormMapFilter.querySelectorAll('.map__filter').forEach((item) => {
 item.disabled=true;
   });
 };
 
 export function activateMapFilter(){
-  addFormMap.querySelectorAll('.map__filter').forEach((item) => {
+  addFormMapFilter.querySelectorAll('.map__filter').forEach((item) => {
 item.disabled=false;
   });
 };

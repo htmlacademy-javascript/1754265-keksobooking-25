@@ -1,3 +1,4 @@
+import {showAlert} from './util.js';
 const serverLink = 'https://25.javascript.pages.academy/keksobooking';
 
 const getData = (onSuccess, onFail) => {
@@ -6,7 +7,8 @@ const getData = (onSuccess, onFail) => {
       if (response.ok) {
         return response.json();
       } else {
-        onFail('Информация не была загружена, обновите страницу');
+        showAlert('Информация не была загружена, обновите страницу');
+        onFail(`Не удалось загрузить данные с сервера. Статус ответа: ${response.status}`);
       }})
     .then((data) => {
       onSuccess(data);
@@ -28,7 +30,8 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+        onFail(`Не удалось отправить данные на сервер. Статус ответа: ${response.status}`);
       }
     })
     .catch((error) => {
