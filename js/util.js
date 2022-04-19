@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+const POPUP_SHOW_TIME = 2000;
 
 function getRandomNumber(min, max) {
   min = Math.ceil(min);
@@ -90,12 +91,22 @@ const showSuccessPopup = () => {
   popup = getTemplate('success');
   document.addEventListener('keydown', onEscapePush);
   document.body.appendChild(popup);
+  setTimeout(() => {
+    popup.remove();
+  }, POPUP_SHOW_TIME);
 };
 
 const showErrorPopup = () => {
   popup = getTemplate('error');
   document.addEventListener('keydown', onEscapePush);
   document.body.appendChild(popup);
+  popup.querySelector('.error__button').addEventListener('click', (evt) => {
+    evt.preventDefault();
+    popup.remove();
+  });
+  setTimeout(() => {
+    popup.remove();
+  }, POPUP_SHOW_TIME);
 };
 
 const debounce = (callback, timeoutDelay = 500) => {
@@ -106,29 +117,6 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-const Escape = 'Escape';
-const EscapeKey = (evt) => evt.key === Escape;
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-const showMessage = (template) => {
-  const message =  template.cloneNode(true);
-
-  const onEscKeydown = (evt) => {
-    if (EscapeKey(evt)) {
-      evt.preventDefault();
-      message.remove();
-    }
-  };
-
-  message.addEventListener('click', () => message.remove());
-  document.addEventListener('keydown', onEscKeydown);
-  document.body.append(message);
-};
-
-
-const successMessage = () => showMessage(successTemplate);
-const failMessage = () => showMessage(errorTemplate);
 export {
   getRandomNumber,
   getRandomResult,
@@ -139,8 +127,6 @@ export {
   isEscapeKey,
   isEnterKey,
   showAlert,
-  successMessage,
-  failMessage,
   showSuccessPopup,
   showErrorPopup
 };

@@ -11,7 +11,7 @@ const minPriceMap = {
   'high': [50000, 100000]
 };
 
-const typeFilter = (ad) => {
+const getTypeFilter = (ad) => {
   const typeFilterValue = housingType.value;
   if (typeFilterValue === 'any') {
     return true;
@@ -19,7 +19,7 @@ const typeFilter = (ad) => {
   return typeFilterValue === ad.offer.type;
 };
 
-const priceFilter = (ad) => {
+const getPriceFilter = (ad) => {
   const priceFilterValue = housingPrice.value;
   if (priceFilterValue === 'any') {
     return true;
@@ -30,7 +30,7 @@ const priceFilter = (ad) => {
   return ad.offer.price >= minPrice && ad.offer.price <= maxPrice;
 };
 
-const roomsFilter = (ad) => {
+const getRoomsFilter = (ad) => {
   const roomsFilterValue = housingRooms.value;
   if (roomsFilterValue === 'any') {
     return true;
@@ -38,7 +38,7 @@ const roomsFilter = (ad) => {
   return Number(roomsFilterValue) === ad.offer.rooms;
 };
 
-const guestsFilter = (ad) => {
+const getGuestsFilter = (ad) => {
   const guestsFilterValue = housingGuests.value;
   if (guestsFilterValue === 'any') {
     return true;
@@ -47,7 +47,7 @@ const guestsFilter = (ad) => {
 };
 
 
-const featuresFilter = (ad) => {
+const getFeaturesFilter = (ad) => {
 
   const featuresChecked = Array.from(mapFilters.querySelectorAll('.map__checkbox:checked'), (inp) => inp.value);
 
@@ -62,8 +62,8 @@ const featuresFilter = (ad) => {
 const getNewArrayOfAds = (ads) => {
   const newArrayOfAds = [];
   for (let i = 0; i < ads.length; i++) {
-    if (typeFilter(ads[i]) && priceFilter(ads[i]) && roomsFilter(ads[i]) &&
-    guestsFilter(ads[i]) && featuresFilter(ads[i])) {
+    if (getTypeFilter(ads[i]) && getPriceFilter(ads[i]) && getRoomsFilter(ads[i]) &&
+    getGuestsFilter(ads[i]) && getFeaturesFilter(ads[i])) {
       newArrayOfAds.push(ads[i]);
     }
     if (newArrayOfAds.length === 10) {
