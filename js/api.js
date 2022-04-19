@@ -1,21 +1,16 @@
 import {showAlert} from './util.js';
 const serverLink = 'https://25.javascript.pages.academy/keksobooking';
 
-const getData = (onSuccess, onFail) => {
+const getData = (onSuccess) => {
   fetch(`${serverLink}/data`)
     .then((response) => {
       if (response.ok) {
         return response.json();
-      } else {
-        showAlert('Информация не была загружена, обновите страницу');
-        onFail(`Не удалось загрузить данные с сервера. Статус ответа: ${response.status}`);
-      }})
-    .then((data) => {
-      onSuccess(data);
+      }
+      showAlert('Информация не была загружена, обновите страницу');
+      return [];
     })
-    .catch((error) => {
-      onFail(error);
-    });
+    .then(onSuccess);
 };
 
 const sendData = (onSuccess, onFail, body) => {

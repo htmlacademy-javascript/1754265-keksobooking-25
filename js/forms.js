@@ -33,8 +33,8 @@ function differentFieldValues() {
   const typeField = bookingForm.querySelector('#type');
   const roomNumberValue = bookingForm.querySelector('#room_number');
   const possibleCapacity = bookingForm.querySelector('#capacity');
-  const possibletimein = bookingForm.querySelector('#timein');
-  const possibletimeout = bookingForm.querySelector('#timeout');
+  const possibleTimeIn = bookingForm.querySelector('#timein');
+  const possibleTimeOut = bookingForm.querySelector('#timeout');
   const possiblePrice = bookingForm.querySelector('#price');
   const resetButton = bookingForm.querySelector('.ad-form__reset');
   const submitButton = bookingForm.querySelector('.ad-form__submit');
@@ -115,12 +115,12 @@ function differentFieldValues() {
   });
 
   //Check in and out
-  possibletimein.addEventListener('change', () => {
-    possibletimeout.selectedIndex = possibletimein.selectedIndex;
+  possibleTimeIn.addEventListener('change', () => {
+    possibleTimeOut.selectedIndex = possibleTimeIn.selectedIndex;
   });
 
-  possibletimeout.addEventListener('change', () => {
-    possibletimein.selectedIndex = possibletimeout.selectedIndex;
+  possibleTimeOut.addEventListener('change', () => {
+    possibleTimeIn.selectedIndex = possibleTimeOut.selectedIndex;
   });
 
   const blockSubmitButton = () => {
@@ -168,6 +168,7 @@ function differentFieldValues() {
   function resetForm() {
     bookingForm.reset();
     sliderElement.noUiSlider.reset();
+    resetAddressValue();
   }
 
   resetButton.addEventListener('click', (evt) => {
@@ -176,7 +177,6 @@ function differentFieldValues() {
     avatarPreview.src='img/muffin-grey.svg';
     photoPreview.src='img/muffin-grey.svg';
     resetMap();
-    resetAddressValue();
     mapFiltersForm.reset();
   });
 }

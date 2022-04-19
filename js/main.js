@@ -8,6 +8,9 @@ import './popup.js';
 import {differentFieldValues} from './forms.js';
 import {disablePage, activatePage, disableMapFilter, activateMapFilter} from './disable.js';
 
+const ERROR_DELAY = 500;
+const TIMEOUT =3000;
+
 const formFilter = document.querySelector('.map__filters');
 const typeFilterBlock = formFilter.querySelector('#housing-type');
 const priceFilterBlock = formFilter.querySelector('#housing-price');
@@ -15,14 +18,13 @@ const roomsFilterBlock = formFilter.querySelector('#housing-rooms');
 const guestsFilterBlock = formFilter.querySelector('#housing-guests');
 const featuresFilterBlock = formFilter.querySelector('#housing-features');
 
-const ERROR_DELAY = 500;
 let points = [];
 
 differentFieldValues();
 disablePage();
-setTimeout(activatePage, 3000);
+setTimeout(activatePage, TIMEOUT);
 disableMapFilter();
-setTimeout(activateMapFilter, 3000);
+setTimeout(activateMapFilter, TIMEOUT);
 closePopup();
 
 const filerChangeHandler = debounce(
@@ -52,9 +54,5 @@ function onSuccessGetData(ads) {
   onFilterChange(filerChangeHandler, featuresFilterBlock);
 }
 
-function onFailedGetData(error) {
-  error();
-}
-
-getData(onSuccessGetData, onFailedGetData);
+getData(onSuccessGetData);
 
